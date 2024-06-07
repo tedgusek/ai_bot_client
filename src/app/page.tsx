@@ -41,12 +41,25 @@ function Home() {
     // Prevents empty messages from being sent
     if (!userMessage.trim()) return;
 
+    const alternateTexts: string[] = [
+      `HumanMessage(content="`,
+      `AIMessage(content="`,
+    ];
+    const messageHistory: string[] = [];
+    // I want to create an array of messages from the messageLog and userMessage to send as the userMessage to save the chat history
+    messageLog.forEach((ele, index) => {
+      const textToUse: string = alternateTexts[index % alternateTexts.length];
+      messageHistory.push(textToUse + ele['message'] + '")');
+    });
+    messageHistory.push(`HumanMessage(content="${userMessage}"`);
+    console.log('messageHistory : ', messageHistory);
+
     fetch('http://localhost:8080/botresponse', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user_message: userMessage }),
+      body: JSON.stringify({ user_message: messageHistory }), // swapped out userMessage for messageHistory
     })
       .then((response) => response.json())
       .then((data) => {
