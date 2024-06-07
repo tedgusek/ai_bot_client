@@ -3,6 +3,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import MessageBubble from '@/components/MessageBubble';
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 function Home() {
   const [message, setMessage] = useState('Loading...');
   const [botresponse, setBotresponse] = useState('');
@@ -10,11 +12,12 @@ function Home() {
   const [messageLog, setMessageLog] = useState<
     { message: string; user: boolean }[]
   >([]);
+
   const messageContainerRef = useRef<HTMLDivElement>(null);
 
   // Retrieves Welcome message from the server on page load
   useEffect(() => {
-    fetch('http://localhost:8080/api/home')
+    fetch(`${apiUrl}/api/home`)
       .then((response) => response.json())
       .then((data) => setMessage(data.message));
   }, []);
@@ -54,7 +57,7 @@ function Home() {
     messageHistory.push(`HumanMessage(content="${userMessage}"`);
     console.log('messageHistory : ', messageHistory);
 
-    fetch('http://localhost:8080/botresponse', {
+    fetch(`${apiUrl}/botresponse`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
