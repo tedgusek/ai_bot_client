@@ -83,7 +83,7 @@ function Home() {
   return (
     <main className='flex flex-col items-center justify-center min-h-screen'>
       <h1 className='font-bold text-3xl p-4'>Serverless ChatBot</h1>
-      <div className='flex flex-col w-4/5 bg-green-500 h-96 items-center justify-center'>
+      <div className='flex flex-col w-4/5 bg-green-500 h-96 items-center justify-center rounded-xl max-w-lg'>
         <div
           ref={messageContainerRef}
           className='text-center my-2 w-4/5 h-4/5 bg-slate-300 rounded-xl drop-shadow-md overflow-y-scroll'
